@@ -11,6 +11,7 @@ namespace PhysicsProjectileSimulator
     // this class is used to manage all the scenes
     // It has three children classes each representing the different scenes
     // Scene 1 (index 0 in SceneManger) is the MainMenu, Scene 2 (index 1) is the PhysicsSimulator, Scene 3 (index 2) is the ProjectileEditor
+    // it is used to save the important variables of some of the scripts so that their values aren't lost at scene change
     public class SceneController : GameController
     {
         private string saveFileName;
@@ -55,18 +56,6 @@ namespace PhysicsProjectileSimulator
             SceneManager.LoadScene(SceneIndex);
         }
 
-        // Start is called before the first frame update
-        void Start()
-        {
-
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
-
         // scene manager has scenes in a list. This project has my three scenes: main menu, physics simulator, projectile editor.
         // on call of this function the scene with the specific index referenced by the inputted indexOfScene integer, will be loaded.
         public void ChangeScene(int indexOfPreviousScene, int indexOfNewScene)
@@ -76,7 +65,7 @@ namespace PhysicsProjectileSimulator
             SetCorrectFileNameAndIndex(indexOfNewScene);
             Load();
         }
-
+        // this will based on the index make the variable for saveFileName be correspondent name wise to the scene being saved or loaded.
         private void SetCorrectFileNameAndIndex(int index)
         {
             if (index == 0)
@@ -95,4 +84,3 @@ namespace PhysicsProjectileSimulator
         }
     }
 }
-
