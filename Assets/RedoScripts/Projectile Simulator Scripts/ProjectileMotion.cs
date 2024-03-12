@@ -4,16 +4,18 @@ using UnityEngine;
 
 namespace PhysicsProjectileSimulator
 {
-
+    // this class is for handling the projectile firing and reseting (essentially most of the projectile motion)
     public class ProjectileMotion : PhysicsSimulator
     {
+        // boolean variables for physical state of projectile
         public bool reset;
         public bool inMotion;
         public bool isPaused;
 
+        // the acceleration to apply as a force
         private Vector3 accelerationForce;
-        public GameObject targetObject;
 
+        // where the projectile Rigidbody can be stored for multiple references
         private Rigidbody projectileRb;
         private Vector3 velocityToReapply;
         private Vector3 locationToReapply;
@@ -27,8 +29,11 @@ namespace PhysicsProjectileSimulator
         // Start is called before the first frame update
         void Start()
         {
+            //get reference to the projectile script
             projectile = GameObject.FindWithTag("projectile").GetComponent<Projectile>();
+            // get reference to its rigidbody (needed for applying forces and velocity)
             projectileRb = projectile.projectileRb;
+            // set boolean variables to their start state
             projectileRb.isKinematic = true;
             inMotion = false;
             reset = true;
@@ -37,9 +42,9 @@ namespace PhysicsProjectileSimulator
         // Update is called once per frame
         void Update()
         {
+            // when space bar is pressed by user begin projectile motion
             if (Input.GetKeyDown(KeyCode.Space) && reset == true)
             {
-                // when space bar is pressed by user begin projectile motion
                 // can only be fired once until reset with keyboard button press R
                 inMotion = true;
                 reset = false;
@@ -120,15 +125,5 @@ namespace PhysicsProjectileSimulator
                 }
             }
         }
-        // this is attached to Move Button Click event
-        // it moves the targetGameObject to the displacement entered by the user only if its a successfull user input
-        public void OnDisplacementChange()
-        {
-            if (variableController.ErrorMessageText.text == "Successfull Input")
-            {
-                targetObject.transform.position = GameControl.control.initialPosition + GameControl.control.displacement;
-            }
-        }
     }
 }
-
