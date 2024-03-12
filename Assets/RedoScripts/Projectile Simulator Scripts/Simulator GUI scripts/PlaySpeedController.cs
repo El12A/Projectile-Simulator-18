@@ -6,8 +6,10 @@ using UnityEngine.UI;
 
 namespace PhysicsProjectileSimulator
 {
+    // this clas handles the timescale of the gameplay based on what value the user chooses using the play speed slider
     public class PlaySpeedController : PhysicsSimulator
     {
+        // reference to the play speed slider and text components
         [SerializeField] private Slider playSpeedSlider;
         [SerializeField] private TMP_Text playSpeedText;
 
@@ -24,4 +26,3 @@ namespace PhysicsProjectileSimulator
         }
     }
 }
-
