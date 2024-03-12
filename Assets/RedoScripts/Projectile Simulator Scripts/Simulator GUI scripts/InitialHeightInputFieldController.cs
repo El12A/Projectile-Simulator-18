@@ -6,13 +6,15 @@ using UnityEngine;
 
 namespace PhysicsProjectileSimulator
 {
-    public class InitialHeightInputFieldController : VariableController
+    // this class handlees the starting height of the projectile and projectile shooter
+    public class InitialHeightInputFieldController : PhysicsSimulator
     {
         [SerializeField] private GameObject projectileShooter;
         public InputFieldRestrictor inputFieldRestrictor;
-        [SerializeField] private VariableController variableControllerScript;
+        
         private void Start()
         {
+            // on start get reference to projectile script of projectile
             projectile = GameObject.FindWithTag("projectile").GetComponent<Projectile>();
         }
         public void OnInputHeightEndEdit()
@@ -31,13 +33,13 @@ namespace PhysicsProjectileSimulator
                 projectile.initialPosition = new Vector3(proj.x, proj.y + initialHeight - 1, proj.z);
                 projectile.projectileObject.transform.position = projectile.initialPosition;
                 //reupdate the variables based off the new starting position and also reupdates the target position
-                variableControllerScript.UpdateInputtedVariables();
+                variableController.UpdateInputtedVariables();
             }
             else
             {
-                ErrorMessageText.text = "InputHeight Must be atleast 1m and no more than 50m";
+                // if input is not in range show error message saying so and do not update initial height
+                variableController.ErrorMessageText.text = "InputHeight Must be atleast 1m and no more than 50m";
             }
         }
     }
 }
-
