@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace PhysicsProjectileSimulator
 {
+    // this class is for calculating the two missing suvat variables using the 3 given as input by the user
     public class FindMissingSuvat : VariableController
     {
         private Vector3 u;
@@ -20,7 +21,7 @@ namespace PhysicsProjectileSimulator
             v = variableController.finalVelocity;
             s = variableController.displacement;
             t = variableController.time;
-            Debug.Log("u" + u + "a" + a + "v" + v + "s" + s + "t" + t);
+
             int varNum = 0;
             // using a simple number system to map to a different possibility as there are twn possible combinations for what goes in and what needs to be calculated.
             // so different varibles going in add up to give a specific number which is always different if the ouput variables are not the same.
@@ -196,4 +197,3 @@ namespace PhysicsProjectileSimulator
         }
     }
 }
-
