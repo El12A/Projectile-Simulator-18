@@ -8,20 +8,24 @@ using UnityEngine.UI;
 
 namespace PhysicsProjectileSimulator
 {
+    // this class handles all the gameobjects in the main menu scene
     public class MainMenu : SceneController
     {
         public GameObject MainMenuObject;
         public GameObject SettingsMenuObject;
         public GameObject InstructionsMenuObject;
 
+        // reference in editor for the dropdowns and sliderS
         [SerializeField] private TMP_Dropdown resolutionDropdown;
         [SerializeField] private TMP_Dropdown frameRateDropdown;
         [SerializeField] private Slider volumeSlider;
-
-        [SerializeField] private GameObject gameMusic;
+        
+        private GameObject gameMusic;
         // Start is called before the first frame update
         void Start()
         {
+            // find music gameobject by seraching for gameobject with this tag
+            // this is because gameMusic is persistant through scenes
             gameMusic = GameObject.FindWithTag("backgroundMusic");
         }
 
@@ -34,7 +38,7 @@ namespace PhysicsProjectileSimulator
         public void OnPlayButtonClick()
         {
             // going from main menu scene index 0 to physics simulator scene index 1
-            ChangeScene(0,1);
+            ChangeScene(0, 1);
         }
         public void OnQuitButtonClick()
         {
@@ -47,10 +51,12 @@ namespace PhysicsProjectileSimulator
             menuOn.SetActive(true);
         }
 
+        // On resolution change update the screen resolution of the game
+        // this is triggered my a new options being chosen from the resolution dropdown
         public void OnResolutionDropdownChange()
         {
             int index = resolutionDropdown.value;
-            if (resolutionDropdown.options[index].text == "1920 × 1080 (FHD)")
+            if (resolutionDropdown.options[index].text == "1920 x 1080 (FHD)")
             {
                 Screen.SetResolution(1920, 1080, true);
             }
@@ -67,6 +73,7 @@ namespace PhysicsProjectileSimulator
                 Screen.SetResolution(3840, 2160, true);
             }
         }
+        //triggered on new option chosen from framerate dropdown
         public void OnFrameRateDropdownChange()
         {
             int index = frameRateDropdown.value;
@@ -93,11 +100,11 @@ namespace PhysicsProjectileSimulator
                 Application.targetFrameRate = -1;
             }
         }
+        // adjusts the volume of the audio component which contains looping background music of game
         public void OnVolumeSliderValueChange()
         {
-            AudioSource backgroundMusic = gameMusic.GetComponent<AudioSource>(); 
+            AudioSource backgroundMusic = gameMusic.GetComponent<AudioSource>();
             backgroundMusic.volume = volumeSlider.value;
         }
     }
 }
-
