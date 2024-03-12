@@ -6,27 +6,35 @@ using UnityEngine;
 
 namespace PhysicsProjectileSimulator
 {
+    // this script has two main functions
+    // updating the current variables text found at the top right of the GUI screen
+    // and handling the timestamp buttons
     public class DisplayCurrentVariables : PhysicsSimulator
     {
+        // references to all the current text variables of the top right panel
         [SerializeField] private TMP_Text displacementText;
         [SerializeField] private TMP_Text velocityText;
         [SerializeField] private TMP_Text accelerationText;
         [SerializeField] private TMP_Text timeText;
         [SerializeField] private TMP_Text rotationText;
-        public float time;
+
         private float nextSecondToSave = 1;
 
+        // variables for all the important current information on the projectile whilst it is in motion
+        public float time;
         private Vector3 currentDisplacement;
         private Vector3 currentVelocity;
         private Vector3 currentAcceleration;
         private Vector3 currentRotation;
         private string lastButton;
 
+        // two stacks of timestamps for going back or forward 1s in the projectiles journey (works like undo and redo buttons) 
         private Stack<TimeStamp> undoTimeStampStack;
         private Stack<TimeStamp> redoTimeStampStack;
 
         private void Start()
         {
+            // on start get reference to projectile and initiate empty timstamp stacks with max of 20 but anyways they will expand capacity if they get full
             projectile = GameObject.FindWithTag("projectile").GetComponent<Projectile>();
             undoTimeStampStack = new Stack<TimeStamp>(20);
 
@@ -82,7 +90,7 @@ namespace PhysicsProjectileSimulator
             {
                 timeText.text = "Time: " + time.ToString().Substring(0, Mathf.Min(4, time.ToString().Length));
             }
-            catch 
+            catch
             {
                 timeText.text = "Time: ";
             }
@@ -113,7 +121,7 @@ namespace PhysicsProjectileSimulator
                     UpdateTimeStamp(redoTimeStampStack, undoTimeStampStack);
                     lastButton = "undo";
                 }
-            }   
+            }
         }
         // called when forward 1s time button is pressed will go forwards in time to next second and will move projectile there and will also update variables displayed for user but will only go up to max the point the projectile has currently reached whilst moving.
         public void GoForwards1sTimeStamp()
@@ -156,7 +164,7 @@ namespace PhysicsProjectileSimulator
         // this is called in the projectile motion script when the unpause button is pressed as we want the undo stack to be refilled
         public void ResetStack()
         {
-            for (int i = 0;  i < redoTimeStampStack.GetCount(); i++)
+            for (int i = 0; i < redoTimeStampStack.GetCount(); i++)
             {
                 undoTimeStampStack.Push(redoTimeStampStack.Pop());
                 Debug.Log(undoTimeStampStack.Peek());
@@ -164,4 +172,3 @@ namespace PhysicsProjectileSimulator
         }
     }
 }
-
