@@ -5,12 +5,15 @@ using UnityEngine;
 
 namespace PhysicsProjectileSimulator
 {
+    // this class handles the suvat dropdowns
     public class SuvatDropdownController : VariableController
     {
+        //references to the suvat dropdowns
         [SerializeField] private TMP_Dropdown dropdown1;
         [SerializeField] private TMP_Dropdown dropdown2;
         [SerializeField] private TMP_Dropdown dropdown3;
 
+        // three lists containing the suvat options available
         private List<string> availableOptions1;
         private List<string> availableOptions2;
         private List<string> availableOptions3;
@@ -54,6 +57,7 @@ namespace PhysicsProjectileSimulator
             AnyDropdownChange(dropdown3, availableOptions3, 2);
         }
 
+        // on any dropdown change call this function with different inputs based on the dropdown being changed
         private void AnyDropdownChange(TMP_Dropdown dropdown, List<string> availableOptions, int i)
         {
             index = dropdown.value;
@@ -80,6 +84,8 @@ namespace PhysicsProjectileSimulator
             options[index] = temp;
         }
 
+        // removes the element selected in the just edited dropdown, from the other two dropdowns
+        // adds the just unselected element in the just edited dropdown, to the other two dropdowns
         private void AddAndRemoveFromList(List<string> KeyList)
         {
             List<List<string>> optionsList = new List<List<string>> { availableOptions1, availableOptions2, availableOptions3 };
@@ -95,4 +101,3 @@ namespace PhysicsProjectileSimulator
 
     }
 }
-
