@@ -1,29 +1,22 @@
 using TMPro;
 using UnityEngine;
+
 namespace PhysicsProjectileSimulator
 {
     public class MissingSuvatTextController : VariableController
     {
-        // Start is called before the first frame update
+        //reference to the text components of the missing variables
         [SerializeField] private TMP_Text text1;
         [SerializeField] private TMP_Text text2;
-        void Start()
-        {
 
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
-
+        // called when a new selection is made from dropdown options
         public void UpdateVariableText()
         {
             text1.text = variableController.unselectedVariables[0];
             text2.text = variableController.unselectedVariables[1];
         }
 
+        // updates the values of the missing suvat variables
         public void UpdateAllText()
         {
             string variable1 = variableController.unselectedVariables[0];
@@ -33,6 +26,8 @@ namespace PhysicsProjectileSimulator
             text2.text = variable2 + "<br>" + GetVarValue(variable2);
         }
 
+        // this function returns the string value of the missing suvat variable that needs to be displayed to the user
+        // rounds the value taken from variable controller to 3 significant figures before displaying it
         private string GetVarValue(string var)
         {
             if (var == "Initial Velocity")
@@ -62,33 +57,5 @@ namespace PhysicsProjectileSimulator
             }
             return "";
         }
-
-        public string RoundToSF(float number, int sigFigs)
-        {
-            string numberString = number.ToString();
-            if (number > float.NegativeInfinity && number < float.PositiveInfinity)
-            {
-                // Check if the number is negative and contains a decimal point
-                if (number < 0 && numberString.Contains('.'))
-                {
-                    // Return the first five characters including the minus sign
-                    return numberString.Substring(0, Mathf.Min(numberString.Length, (sigFigs + 2)));
-                }
-                // Check if the number contains a decimal point or a negative sign
-                else if (numberString.Contains('.') || number < 0)
-                {
-                    // Return the first four characters
-                    return numberString.Substring(0, Mathf.Min(numberString.Length, (sigFigs + 1)));
-                }
-                else
-                {
-                    // Return the first three characters
-                    return numberString.Substring(0, Mathf.Min(numberString.Length, sigFigs));
-                }
-
-            }
-            return numberString;
-        }
     }
 }
-
